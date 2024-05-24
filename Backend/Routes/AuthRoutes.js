@@ -11,4 +11,5 @@ authRouter.post("/register", registerUser);
 authRouter.post("/login", loginUser);
 // below one is to get user's details (userName and userId)
 authRouter.get("/getuser", checkUser, getUserDetails);
+
 export default authRouter;

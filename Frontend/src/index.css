@@ -22,12 +22,20 @@ textarea:focus {
   outline: none;
 }
 
+/* To hide the scrollbar on right side */
 .hide-scroller {
-  /*  all below circus is to hide scrollbar */
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
+/* loading skeleton's text */
+@layer components {
+  .text-skeleton {
+    @apply h-3 animate-pulse rounded-3xl bg-slate-300;
+  }
+}
+
+/* page changing animation */
 .animate-wiggle {
   animation: wiggle 0.8s;
 }

@@ -1,16 +1,24 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { customFetch } from "../../../Utils";
+import { useGlobalContext } from "../../GlobalContext";
+import { toast } from "react-hot-toast";
+
 import FillButton from "../../Components/Button/FillButton";
 import FormInput from "../../Components/FormInput/FormInput";
 import { PageChanger } from "../../Components/PageChanger/PageChanger";
-import { customFetch, getUserData } from "../../../Utils";
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
-import { useGlobalContext } from "../../GlobalContext";
+import SuccessToast from "../../Components/Toast/SuccessToast";
 
 const Register = () => {
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
-  const { dispatch } = useGlobalContext();
+  const { dispatch, currentlyLoggedInUser } = useGlobalContext();
+
+  // if user is already logged in
+  useEffect(() => {
+    if (currentlyLoggedInUser != false) navigate(-1);
+  }, []);
 
   const handleRegisterUser = async (userData) => {
     try {
@@ -65,7 +73,9 @@ const Register = () => {
           type: "SET_CURRENTLY_LOGGED_IN_USER",
           payload: { userName: data.userName, userId: data.userId },
         });
-
+        toast.custom((t) => (
+          <SuccessToast message={`Account created succesfully`} toast={t} />
+        ));
         navigate("/");
       }
     },
@@ -83,9 +93,9 @@ const Register = () => {
 
   return (
     <PageChanger>
-      <div className="min-h-[700px] px-4 h-screen flex flex-col justify-center">
+      <div className="min-h-[700px] px-4 h-screen flex flex-col justify-center dark:bg-black dark:text-green-700">
         <div className="max-w-[450px] w-full  mx-auto">
-          <h1 className="text-3xl font-semibold text-center lg:text-4xl">
+          <h1 className="text-3xl font-semibold text-center lg:text-4xl dark:text-white">
             Create an account
           </h1>
           <p className="text-base text-center lg:text-lg">
@@ -141,13 +151,13 @@ const Register = () => {
             </div>
           </form>
 
-          <p className="text-sm mt-5 lg:text-base text-center">
+          <p className="text-sm mt-5 lg:text-base text-center dark:text-white">
             Already have an account?{" "}
             <span
               onClick={() => {
                 if (!isPending) navigate("/login");
               }}
-              className="font-semibold cursor-pointer hover:underline"
+              className="font-semibold cursor-pointer hover:underline dark:text-green-700"
             >
               Login
             </span>

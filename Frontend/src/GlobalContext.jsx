@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
-/* eslint-disable react/prop-types */
 import { createContext, useContext, useReducer } from "react";
+import PropTypes from "prop-types";
 const globalContext = createContext();
 const root = document.documentElement;
 
@@ -36,6 +36,7 @@ const GlobalContext = ({ children }) => {
         }
       }
     }
+
     // to change user's preferred theme
     if (action.type == "CHANGE_USER_THEME_PREFERENCE") {
       root.className = "";
@@ -47,6 +48,10 @@ const GlobalContext = ({ children }) => {
     if (action.type == "SET_CURRENTLY_LOGGED_IN_USER") {
       return { ...state, currentlyLoggedInUser: action.payload };
     }
+  };
+
+  GlobalContext.propTypes = {
+    children: PropTypes.object,
   };
 
   const [state, dispatch] = useReducer(reducer, defaultState);

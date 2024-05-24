@@ -15,16 +15,16 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
-    // set this true if u r sending token from cookie as it allows to send cookies otherwise cors policy will block cookies
   })
 );
-app.use(cookieParser());
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// below request is for testing
 app.get("/", (req, res) => {
-  res.send("hellow");
+  res.send("helloww");
 });
 
 app.use("/api/v1/auth", authRouter);

@@ -4,19 +4,18 @@ import {
   FaLinkedinIn,
   FaXTwitter,
 } from "react-icons/fa6";
-
 import { footerLinks } from "../../../../Data";
 
 const Footer = () => {
   const date = new Date().getFullYear();
 
   return (
-    <div className="px-4 py-8 md:pt-14 bg-lime-50 fit-width">
+    <div className="px-4 py-8 md:pt-14 bg-lime-50 fit-width dark:bg-green-950 dark:text-white">
       <div className="flex justify-between flex-wrap gap-8">
-        {footerLinks.map((e, i) => {
+        {footerLinks.map((e) => {
           return (
             <div className="" key={e.title}>
-              <p className="font-semibold mb-2 text-base lg:text-lg">
+              <p className="font-semibold mb-2 text-base lg:text-lg dark:text-green-400">
                 {e.title}
               </p>
               <ul className="flex flex-col gap-[.35rem] lg:gap-2">

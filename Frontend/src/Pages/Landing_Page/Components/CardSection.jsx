@@ -20,8 +20,8 @@ const data = [
 
 const CardSection = () => {
   return (
-    <div className="px-4 py-8 bg-white md:py-14 lg:py-16 fit-width">
-      <h1 className="text-2xl font-semibold md:w-7/12 lg:text-4xl lg:leading-[2.7rem]">
+    <div className="px-4 py-8 bg-white md:py-14 lg:py-16 fit-width dark:bg-[#14251c] dark:text-white">
+      <h1 className="text-2xl font-semibold md:w-7/12 lg:text-4xl lg:leading-[2.7rem] dark:text-green-600">
         The best way to manage your reading life.
       </h1>
       <p className="mt-2 text-[.95rem] md:w-1/2 lg:text-lg lg:mt-3">
@@ -36,7 +36,9 @@ const CardSection = () => {
               key={card.title}
             >
               <div className="text-2xl">{card.icon}</div>
-              <h2 className="text-lg font-semibold">{card.title}</h2>
+              <h2 className="text-lg font-semibold dark:text-green-600">
+                {card.title}
+              </h2>
               <p className="text-md lg:text-lg">{card.desc}</p>
             </div>
           );

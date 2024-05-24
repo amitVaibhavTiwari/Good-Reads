@@ -1,11 +1,14 @@
-import FillButton from "../../../Components/Button/FillButton";
-import { IoSunnyOutline } from "react-icons/io5";
-import { BsList } from "react-icons/bs";
-import Logo from "./Logo";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../../GlobalContext";
 import { useCookies } from "react-cookie";
+import { BsList } from "react-icons/bs";
+import { toast } from "react-hot-toast";
+import { FaMoon, FaSun } from "react-icons/fa6";
+
+import FillButton from "../../../Components/Button/FillButton";
+import Logo from "./Logo";
+import SuccessToast from "../../../Components/Toast/SuccessToast";
 
 const navlinks = [
   {
@@ -18,7 +21,7 @@ const navlinks = [
   },
   {
     label: "Browse",
-    link: "/",
+    link: "/all",
   },
   {
     label: "Community",
@@ -33,6 +36,7 @@ const navlinks = [
 const Navbar = () => {
   const { theme, dispatch, currentlyLoggedInUser } = useGlobalContext();
   const navigate = useNavigate();
+  // without importing cookies and setCookies, removeCookie is not working (idk why)
   const [cookies, setCookie, removeCookie] = useCookies([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [active, setActive] = useState(false);
@@ -48,20 +52,43 @@ const Navbar = () => {
     };
   }, [active]);
 
+  //
+  //
   const handleLogout = async () => {
     removeCookie("jwt");
     dispatch({
       type: "SET_CURRENTLY_LOGGED_IN_USER",
       payload: false,
     });
+    toast.custom((t) => (
+      <SuccessToast message={`Logged out succesfully`} toast={t} />
+    ));
+  };
+
+  //
+  //
+  //
+  const handleThemeChange = () => {
+    if (theme == "dark") {
+      dispatch({
+        type: "CHANGE_USER_THEME_PREFERENCE",
+        payload: { theme: "light" },
+      });
+    }
+    if (theme === "light") {
+      dispatch({
+        type: "CHANGE_USER_THEME_PREFERENCE",
+        payload: { theme: "dark" },
+      });
+    }
   };
 
   return (
     <nav
-      className={`p-4  fit-width z-10 lg:py-6 ${
+      className={`p-4 fit-width z-10 lg:py-6 dark:text-green-700 ${
         active
           ? "bg-transparent fixed top-0 backdrop-blur-md w-full"
-          : "bg-lime-100"
+          : "bg-lime-100 dark:bg-black"
       }`}
     >
       <div className="flex items-center justify-between mx-auto">
@@ -73,9 +100,9 @@ const Navbar = () => {
             {navlinks.map((navlink) => {
               return (
                 <li key={navlink.label}>
-                  <a className="hover:underline" href={navlink.link}>
+                  <Link className="hover:underline" to={navlink.link}>
                     {navlink.label}
-                  </a>
+                  </Link>
                 </li>
               );
             })}
@@ -86,7 +113,7 @@ const Navbar = () => {
           {currentlyLoggedInUser ? (
             <button
               onClick={() => handleLogout()}
-              className="text-sm font-medium hover:underline hover:font-semibold"
+              className="text-sm font-medium hover:underline hover:font-semibold dark:text-white"
             >
               Logout
             </button>
@@ -102,8 +129,8 @@ const Navbar = () => {
             handleClick={() => navigate("/add/new")}
             title={"Add new"}
           />
-          <div className="text-base">
-            <IoSunnyOutline />
+          <div onClick={() => handleThemeChange()} className="text-base">
+            {theme == "dark" ? <FaSun /> : <FaMoon />}
           </div>
           <div
             onClick={() => setIsSidebarOpen(true)}
@@ -114,7 +141,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Sidebar visible on mobile devices only */}
+      {/* Sidebar (visible on mobile devices only)*/}
 
       {/* sidebar parent covering whole screen */}
       <div
@@ -129,7 +156,7 @@ const Navbar = () => {
             e.stopPropagation();
             return null;
           }}
-          className="w-[60vw] px-4 py-5 bg-lime-200 min-h-screen md:hidden"
+          className="w-[60vw] px-4 py-5 bg-lime-200 dark:bg-gray-950 min-h-screen md:hidden"
         >
           <Logo />
 

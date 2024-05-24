@@ -3,18 +3,29 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
+      animation: {
+        enter: "fadeInRight 300ms ease-out",
+        leave: "fadeOutLeft 300ms ease-in forwards",
+      },
       keyframes: {
-        wiggle: {
-          from: {
+        fadeInRight: {
+          "0%": {
             opacity: "0",
+            transform: "translateY(-2rem)",
           },
-          to: {
+          "100%": {
             opacity: "1",
+            transform: "translate(0)",
           },
         },
-      },
-      animation: {
-        wiggle: "wiggle",
+        fadeOutLeft: {
+          "0%": {
+            opacity: "1",
+          },
+          "100%": {
+            opacity: "0",
+          },
+        },
       },
     },
   },

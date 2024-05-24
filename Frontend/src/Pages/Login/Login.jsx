@@ -1,17 +1,28 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
+import { customFetch } from "../../../Utils";
+
+import SuccessToast from "../../Components/Toast/SuccessToast";
 import FillButton from "../../Components/Button/FillButton";
 import FormInput from "../../Components/FormInput/FormInput";
 import { PageChanger } from "../../Components/PageChanger/PageChanger";
-import { customFetch } from "../../../Utils";
-import { useState } from "react";
 import { useGlobalContext } from "../../GlobalContext";
-import { useMutation } from "@tanstack/react-query";
 
 const Login = () => {
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
-  const { dispatch } = useGlobalContext();
+  const { dispatch, currentlyLoggedInUser } = useGlobalContext();
 
+  // if user is already logged in
+  useEffect(() => {
+    if (currentlyLoggedInUser != false) navigate(-1);
+  }, []);
+
+  //
+  //
+  //
   const handleLoginUser = async (userData) => {
     try {
       const resp = await customFetch().post("api/v1/auth/login", userData, {
@@ -33,6 +44,9 @@ const Login = () => {
           type: "SET_CURRENTLY_LOGGED_IN_USER",
           payload: { userName: data.userName, userId: data.userId },
         });
+        toast.custom((t) => (
+          <SuccessToast message={`Welcome back ${data.userName}`} toast={t} />
+        ));
         navigate("/");
       }
     },
@@ -47,9 +61,9 @@ const Login = () => {
 
   return (
     <PageChanger>
-      <div className="h-screen min-h-[500px] px-4  flex flex-col justify-center">
+      <div className="h-screen min-h-[500px] px-4  flex flex-col justify-center dark:bg-black dark:text-green-700">
         <div className="max-w-[450px] w-full  mx-auto">
-          <h1 className="text-3xl font-semibold text-center lg:text-4xl">
+          <h1 className="text-3xl font-semibold text-center lg:text-4xl dark:text-white">
             Welcome back
           </h1>
           <p className="text-base text-center lg:text-lg">
@@ -90,11 +104,11 @@ const Login = () => {
             </div>
           </form>
 
-          <p className="text-sm mt-5 lg:text-base text-center">
+          <p className="text-sm mt-5 lg:text-base text-center dark:text-white">
             New here?{" "}
             <span
               onClick={() => navigate("/register")}
-              className="font-semibold cursor-pointer hover:underline"
+              className="font-semibold cursor-pointer hover:underline dark:text-green-700"
             >
               Register
             </span>

@@ -1,17 +1,21 @@
+import { useEffect, useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import HomePage from "./Pages/Home_Page/HomePage";
-import Landing from "./Pages/Landing_Page/Landing";
-import AllBooks from "./Pages/All_Books_Page/AllBooks";
-import SingleBookPage from "./Pages/Single_Book_Page/SingleBookPage";
-import AddNew from "./Pages/Add_New_Book_Page/AddNew";
-import EditBook from "./Pages/Edit_Book/EditBook";
-import Login from "./Pages/Login/Login";
-import Register from "./Pages/Register/Register";
-import { useEffect, useState } from "react";
-import { useGlobalContext } from "./GlobalContext";
 import { getUserData } from "../Utils";
+import {
+  AllBooksPage,
+  RegisterPage,
+  LoginPage,
+  Homepage,
+  EditBookPage,
+  AddNewBook,
+  SingleBookPage,
+  LandingPage,
+} from "./Pages/Index";
+
+import { useGlobalContext } from "./GlobalContext";
+import { Toaster } from "react-hot-toast";
 import { useCookies } from "react-cookie";
 import ProtectedComponent from "./Components/Protected-Component/ProtectedComponent";
 
@@ -31,16 +35,16 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <HomePage />,
+      element: <Homepage />,
 
       children: [
         {
           index: true,
-          element: <Landing />,
+          element: <LandingPage />,
         },
         {
           path: "/all",
-          element: <AllBooks />,
+          element: <AllBooksPage />,
         },
 
         {
@@ -51,32 +55,37 @@ const App = () => {
     },
     {
       path: "/login",
-      element: <Login />,
+      element: <LoginPage />,
     },
     {
       path: "/register",
-      element: <Register />,
+      element: <RegisterPage />,
     },
-    // protected routes below
 
+    // protected routes below
     {
       element: <ProtectedComponent />,
       children: [
         {
           path: "/add/new",
-          element: <AddNew />,
+          element: <AddNewBook />,
         },
         {
           path: "/edit/:id",
-          element: <EditBook />,
+          element: <EditBookPage />,
         },
       ],
     },
   ]);
 
   const [isLoading, setIsLoading] = useState(true);
+
+  // This useEffect will run initially before our app loads to setup the LoggedIn user (if user is logged in) and user preferred theme in global state value.
   useEffect(() => {
     const func = async () => {
+      dispatch({
+        type: "GET_INITIAL_THEME_PREFERENCE",
+      });
       if (cookies.jwt) {
         const dta = await getUserData();
         if (dta) {
@@ -99,6 +108,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
       <ReactQueryDevtools initialIsOpen={false} />
+      <Toaster />
     </QueryClientProvider>
   );
 };

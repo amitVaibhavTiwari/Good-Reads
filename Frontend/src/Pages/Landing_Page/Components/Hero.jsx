@@ -1,9 +1,11 @@
 import Button from "../../../Components/Button/Button";
 import FillButton from "../../../Components/Button/FillButton";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
-    <div className="p-4 pb-10 bg-lime-100 flex flex-col gap-8 md:flex-row md:py-14 lg:items-center lg:justify-between fit-width">
+    <div className="p-4 pb-10 bg-lime-100 flex flex-col gap-8 md:flex-row md:py-14 lg:items-center lg:justify-between fit-width dark:bg-black">
       {/* hero image */}
       <div className="md:order-2 md:basis-1/2">
         <img
@@ -15,12 +17,12 @@ const Hero = () => {
 
       {/* Hero text */}
       <div className="md:basis-1/2">
-        <h1 className="text-3xl font-semibold lg:text-5xl lg:leading-[3.5rem]">
+        <h1 className="text-3xl font-semibold lg:text-5xl lg:leading-[3.5rem] dark:text-white">
           The World's largest book community
         </h1>
-        <p className="mt-2 text-[.95rem] lg:text-lg">
+        <p className="mt-2 text-[.95rem] lg:text-lg dark:text-green-700">
           With a staggering collection of over 50 million books at your
-          disposal, there's an excellent chance thaat you'll uncover a literary
+          disposal, there's an excellent chance that you'll uncover a literary
           treasure perfectly tailored to your taste and preference.{" "}
         </p>
 
@@ -31,8 +33,11 @@ const Hero = () => {
         />
 
         <div className="mt-6 flex gap-3">
-          <FillButton title={"Join for free"} />
-          <Button title={"Browse books"} />
+          <FillButton
+            title={"Join for free"}
+            handleClick={() => navigate("/register")}
+          />
+          <Button title={"Browse books"} handleClick={() => navigate("/all")} />
         </div>
       </div>
     </div>

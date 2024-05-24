@@ -13,6 +13,8 @@ const createToken = (id) => {
 //
 //
 //
+// All the controller functions starting from below
+
 export const registerUser = async (req, res) => {
   try {
     const { password, email } = req.body;
@@ -59,11 +61,11 @@ export const getUserDetails = async (req, res) => {
   try {
     const user = await userModel.findById(req.userId);
     if (user) {
-      res
+      return res
         .status(200)
         .json({ userName: user.firstName, userId: user._id, found: true });
     } else {
-      res.status(404).json({ message: "no user found", found: false });
+      return res.status(404).json({ message: "no user found", found: false });
     }
   } catch (error) {
     res.status(500).json({ message: err.message, found: false });
@@ -86,6 +88,7 @@ export const loginUser = async (req, res) => {
         return res.status(401).json({ message: "Invalid email or password" });
       }
       const token = createToken(user._id);
+
       res.cookie("jwt", token, {
         httpOnly: false,
         maxAge: maxAge * 1000,
