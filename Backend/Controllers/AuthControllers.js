@@ -38,9 +38,10 @@ export const registerUser = async (req, res) => {
     res.cookie("jwt", token, {
       httpOnly: false,
       //   if secure is set to true, it will not work over http it will work only over https so for development it's set to false, for production set it to true.
-      secure: false,
+      secure: true,
       //   cookie will expire after the token has expired so user will have to login again :-)
       maxAge: maxAge * 1000,
+      sameSite: "none",
     });
 
     res
@@ -92,7 +93,8 @@ export const loginUser = async (req, res) => {
       res.cookie("jwt", token, {
         httpOnly: false,
         maxAge: maxAge * 1000,
-        secure: false,
+        secure: true,
+        sameSite: "none",
       });
       res.status(200).json({
         message: "Login successful",

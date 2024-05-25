@@ -97,7 +97,7 @@ const App = () => {
       dispatch({
         type: "GET_INITIAL_THEME_PREFERENCE",
       });
-      if (cookies.jwt) {
+      if (cookies?.jwt) {
         const dta = await getUserData();
         if (dta) {
           dispatch({
