@@ -6,7 +6,7 @@ const SingleBook = ({ bookTitle, bookRating, bookPrice, bookAuthor, _id }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="border-2 border-black p-2 bg-white rounded-2xl w-full animate-wiggle dark:bg-transparent dark:border-green-700">
+    <div className="border-2 border-black p-2 bg-white rounded-2xl w-full max-w-[10rem] md:max-w-[14rem] lg:max-w-[15rem] animate-wiggle dark:bg-transparent dark:border-green-700">
       {/* we're using a div instead of book's image */}
       <div className="h-28 grid place-items-center md:h-32 lg:h-36 bg-slate-500 dark:bg-slate-700">
         -Book-

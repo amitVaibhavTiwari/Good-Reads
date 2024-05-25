@@ -12,6 +12,8 @@ import {
   AddNewBook,
   SingleBookPage,
   LandingPage,
+  AboutPage,
+  UserBooksPage,
 } from "./Pages/Index";
 
 import { useGlobalContext } from "./GlobalContext";
@@ -51,6 +53,11 @@ const App = () => {
           path: "/all/:id",
           element: <SingleBookPage />,
         },
+
+        {
+          path: "/about",
+          element: <AboutPage />,
+        },
       ],
     },
     {
@@ -69,6 +76,10 @@ const App = () => {
         {
           path: "/add/new",
           element: <AddNewBook />,
+        },
+        {
+          path: "/user/books",
+          element: <UserBooksPage />,
         },
         {
           path: "/edit/:id",

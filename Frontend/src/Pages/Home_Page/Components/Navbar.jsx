@@ -17,7 +17,7 @@ const navlinks = [
   },
   {
     label: "About",
-    link: "/",
+    link: "/about",
   },
   {
     label: "Browse",
@@ -29,7 +29,7 @@ const navlinks = [
   },
   {
     label: "My books",
-    link: "/",
+    link: "/user/books",
   },
 ];
 
@@ -166,7 +166,14 @@ const Navbar = () => {
               {navlinks.map((navlink) => {
                 return (
                   <li key={navlink.label}>
-                    <a href={navlink.link}>{navlink.label}</a>
+                    <p
+                      onClick={() => {
+                        setIsSidebarOpen(false);
+                        navigate(navlink.link);
+                      }}
+                    >
+                      {navlink.label}
+                    </p>
                   </li>
                 );
               })}

@@ -36,8 +36,6 @@ export const getBook = async (req, res) => {
 //
 //
 //
-//
-//
 // complicated one! read carefully to understand.
 export const getAllBooks = async (req, res) => {
   const { bookTitle, bookPrice, bookRating, bookGenre, page, limit } =
@@ -126,6 +124,30 @@ export const editBook = async (req, res) => {
       .json({ message: "Book updated succesfully", edited: true });
   } catch (error) {
     res.status(500).json({ message: error.message, edited: false });
+  }
+};
+//
+//
+//
+//
+// To get books uploaded by a user
+
+export const getUserBooks = async (req, res) => {
+  // We'll not send all the fields of every book. We'll only send following fields.
+  const fields = ["bookTitle", "bookPrice", "bookRating", "bookAuthor"];
+
+  try {
+    const resp = await bookModel
+      .find({ ownerId: req.userId }, fields)
+      .sort({ createdAt: -1 });
+    if (resp) {
+      return res.status(200).json({ books: resp, found: true });
+    }
+    if (!resp) {
+      return res.status(404).json({ message: "No books found", found: false });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message, found: false });
   }
 };
 

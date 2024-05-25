@@ -59,7 +59,7 @@ const AddNew = () => {
         <div className="px-2 py-5 shadow-lg max-w-[750px] mx-auto md:px-6 md:py-8 dark:bg-[#14251c]">
           <h1 className="text-2xl font-semibold mb-3 text-center md:text-left lg:text-3xl lg:mb-5 ">
             Welcome,{" "}
-            <span className="text-md lg:text-lg dark:text-green-700">
+            <span className="text-base lg:text-lg dark:text-green-700">
               {currentlyLoggedInUser.userName}
             </span>
           </h1>
