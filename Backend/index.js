@@ -11,7 +11,7 @@ const app = express();
 // middleware to handle cors policy below
 app.use(
   cors({
-    origin: "*",
+    origin: "https://good-reads-eight.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
