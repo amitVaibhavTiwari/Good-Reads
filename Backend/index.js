@@ -11,7 +11,7 @@ const app = express();
 // middleware to handle cors policy below
 app.use(
   cors({
-    origin: "https://good-reads-eight.vercel.app",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -22,9 +22,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// below request is for testing
+// below request is for testing api
 app.get("/", (req, res) => {
-  res.send("helloww");
+  res.send("hello");
 });
 
 app.use("/api/v1/auth", authRouter);
@@ -46,4 +46,5 @@ const start = async () => {
     console.log(err);
   }
 };
+
 start();

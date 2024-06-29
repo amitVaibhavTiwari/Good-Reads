@@ -17,9 +17,6 @@ export const addBook = async (req, res) => {
 };
 //
 //
-//
-//
-//
 export const getBook = async (req, res) => {
   try {
     const book = await bookModel.findById(req.params.id);
@@ -32,8 +29,6 @@ export const getBook = async (req, res) => {
     res.status(500).json({ message: error.message, found: false });
   }
 };
-
-//
 //
 //
 // complicated one! read carefully to understand.
@@ -88,9 +83,6 @@ export const getAllBooks = async (req, res) => {
 
 //
 //
-//
-//
-//
 export const editBook = async (req, res) => {
   const { id } = req.params;
   try {
@@ -126,9 +118,7 @@ export const editBook = async (req, res) => {
     res.status(500).json({ message: error.message, edited: false });
   }
 };
-//
-//
-//
+
 //
 // To get books uploaded by a user
 
@@ -151,8 +141,6 @@ export const getUserBooks = async (req, res) => {
   }
 };
 
-//
-//
 //
 //
 export const deleteBook = async (req, res) => {

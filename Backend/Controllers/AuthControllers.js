@@ -11,8 +11,6 @@ const createToken = (id) => {
 };
 //
 //
-//
-//
 // All the controller functions starting from below
 
 export const registerUser = async (req, res) => {
@@ -44,17 +42,17 @@ export const registerUser = async (req, res) => {
       sameSite: "none",
     });
 
-    res
-      .status(201)
-      .json({ userId: user._id, userName: user.firstName, created: true });
+    res.status(201).json({
+      userId: user._id,
+      userName: user.firstName,
+      token: token,
+      created: true,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err.message, created: false });
   }
 };
-//
-//
-//
 //
 //
 // to get user's details
@@ -72,9 +70,6 @@ export const getUserDetails = async (req, res) => {
     res.status(500).json({ message: err.message, found: false });
   }
 };
-//
-//
-//
 //
 //
 // To login user
@@ -99,6 +94,7 @@ export const loginUser = async (req, res) => {
       res.status(200).json({
         message: "Login successful",
         userName: user.firstName,
+        token: token,
         userId: user._id,
       });
     } else {

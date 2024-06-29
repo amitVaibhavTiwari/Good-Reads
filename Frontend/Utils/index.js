@@ -3,8 +3,7 @@ import axios from "axios";
 // axios instance
 export const customFetch = () => {
   return axios.create({
-    baseURL: "https://good-reads-ktqy.onrender.com/",
-    // baseURL: "http://localhost:5000/",
+    baseURL: "http://localhost:5000/",
   });
 };
 
